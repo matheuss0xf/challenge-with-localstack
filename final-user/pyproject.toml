@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "final-user"
+version = "0.1.0"
+description = ""
+authors = ["matheuss0xf <matheussjd9@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.115.12"}
+boto3 = "^1.37.27"
+pydantic-settings = "^2.8.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.1.1"
+taskipy = "^1.14.1"
+ruff = "^0.9.10"
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+lint = 'ruff check .; ruff check . --diff'
+format = 'ruff check . --fix; ruff format .'
+test = 'pytest -s -x --cov=finaluser -vv'
+run = 'uvicorn finaluser.main:app --host 0.0.0.0 --port 8081 --reload'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

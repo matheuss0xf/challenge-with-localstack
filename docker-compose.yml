@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=dynamodb,sqs,lambda
+      - DEBUG=1
+      - LAMBDA_EXECUTOR=docker-reuse
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./.localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - localstack
+    volumes:
+      - ./scripts:/scripts
+      - ./lambda:/lambda
+    env_file:
+      - .env
+
+  configurationuser:
+    build:
+      context: ./configuration-user
+      dockerfile: Dockerfile
+    container_name: configurationuser
+    ports:
+      - "8082:8082"
+    environment:
+      - ENVIRONMENT=local
+    depends_on:
+      - localstack
+
+  finaluser:
+    build:
+      context: ./final-user
+      dockerfile: Dockerfile
+    container_name: finaluser
+    ports:
+      - "8081:8081"
+    environment:
+      - ENVIRONMENT=local
+    depends_on:
+      - localstack
