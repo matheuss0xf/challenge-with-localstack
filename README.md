@@ -1,6 +1,6 @@
 # Challenge - Enrollment System
 
-Este projeto simula um sistema de matrículas utilizando uma arquitetura orientada a microsserviços com **FastAPI**, **DynamoDB**, **SQS** e **Lambda** em ambiente local via **LocalStack**.
+Este projeto simula um sistema de matrículas com **FastAPI**, **DynamoDB**, **SQS** e **Lambda** em ambiente local via **LocalStack**.
 
 ## Estrutura do Projeto
 
@@ -11,7 +11,6 @@ Este projeto simula um sistema de matrículas utilizando uma arquitetura orienta
 ├── lambda                 # Função Lambda para processar filas do SQS
 ├── scripts                # Scripts de setup (ex: criação de recursos no LocalStack)
 ├── docker-compose.yml     # Orquestra LocalStack e ambiente de desenvolvimento
-├── requirements.txt        # Dependências gerais (caso necessário)
 └── README.md               # Este arquivo
 ```
 
@@ -101,4 +100,4 @@ task test
 
 ---
 
-_Desenvolvido para o desafio técnico._
+_Desenvolvido para um desafio técnico._
